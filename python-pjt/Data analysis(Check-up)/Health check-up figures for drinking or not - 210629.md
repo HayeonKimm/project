@@ -21,8 +21,9 @@ import matplotlib.pyplot as plt
 
 ```python
 import matplotlib.pyplot as plt
-plt.rc('font',family= 'Malgun Gothic')  # 한글깨짐방지 두줄.
+# 한글깨짐방지 두줄.
 plt.rc('axes',unicode_minus=False)
+plt.rcParams['font.family'] = 'NanumGothic'
 ```
 
 
@@ -707,27 +708,27 @@ df.sample()
   </thead>
   <tbody>
     <tr>
-      <th>729495</th>
+      <th>596998</th>
       <td>2017</td>
-      <td>729496</td>
+      <td>596999</td>
       <td>1</td>
-      <td>17</td>
-      <td>41</td>
-      <td>150</td>
-      <td>60</td>
-      <td>85.0</td>
-      <td>0.5</td>
-      <td>0.4</td>
+      <td>11</td>
+      <td>28</td>
+      <td>165</td>
+      <td>85</td>
+      <td>99.7</td>
+      <td>1.0</td>
+      <td>0.9</td>
       <td>...</td>
-      <td>22.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>1</td>
+      <td>38.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>0</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>0.0</td>
+      <td>NaN</td>
       <td>20181126</td>
     </tr>
   </tbody>
@@ -1649,6 +1650,49 @@ df.pivot_table(index=['성별코드','음주여부'],values='감마지티피',
 
 
 
+전체 데이터 시각화
+
+
+```python
+h=df.hist(figsize=(15,15))
+```
+
+
+    
+![png](output_26_0.png)
+    
+
+
+
+```python
+df.iloc[:,:12].hist(figsize=(12,12))
+#너무 많으니까 12개 컬럼에 대해서만
+```
+
+
+
+
+    array([[<AxesSubplot:title={'center':'기준년도'}>,
+            <AxesSubplot:title={'center':'가입자일련번호'}>,
+            <AxesSubplot:title={'center':'성별코드'}>],
+           [<AxesSubplot:title={'center':'연령대코드(5세단위)'}>,
+            <AxesSubplot:title={'center':'시도코드'}>,
+            <AxesSubplot:title={'center':'신장(5Cm단위)'}>],
+           [<AxesSubplot:title={'center':'체중(5Kg단위)'}>,
+            <AxesSubplot:title={'center':'허리둘레'}>,
+            <AxesSubplot:title={'center':'시력(좌)'}>],
+           [<AxesSubplot:title={'center':'시력(우)'}>,
+            <AxesSubplot:title={'center':'청력(좌)'}>,
+            <AxesSubplot:title={'center':'청력(우)'}>]], dtype=object)
+
+
+
+
+    
+![png](output_27_1.png)
+    
+
+
 
 ```python
 
@@ -1679,6 +1723,174 @@ df.pivot_table(index=['성별코드','음주여부'],values='감마지티피',
 
 ```
 
+## 샘플데이터 추출하기
+
+
+```python
+df_sample = df.sample(1000,random_state=1)
+df_sample.shape # 너무 많으니까 1000개만.
+```
+
+
+
+
+    (1000, 34)
+
+
+
+
+```python
+df['음주여부'].value_counts().plot.bar()
+```
+
+
+
+
+    <AxesSubplot:>
+
+
+
+
+    
+![png](output_36_1.png)
+    
+
+
+
+```python
+sns.countplot(x='음주여부',data=df)
+```
+
+
+
+
+    <AxesSubplot:xlabel='음주여부', ylabel='count'>
+
+
+
+
+    
+![png](output_37_1.png)
+    
+
+
+
+```python
+sns.set(font_scale=1, font = 'NanumGothic')
+sns.countplot(data=df, x='음주여부', hue ='성별코드')
+```
+
+
+
+
+    <AxesSubplot:xlabel='음주여부', ylabel='count'>
+
+
+
+
+    
+![png](output_38_1.png)
+    
+
+
+
+```python
+sns.countplot(data=df, x='연령대코드(5세단위)',hue='음주여부')
+```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='count'>
+
+
+
+
+    
+![png](output_39_1.png)
+    
+
+
+## 키와 몸무게
+
+
+```python
+plt.figure(figsize=(15,4))
+sns.countplot(data=df, x='신장(5Cm단위)')
+```
+
+
+
+
+    <AxesSubplot:xlabel='신장(5Cm단위)', ylabel='count'>
+
+
+
+
+    
+![png](output_41_1.png)
+    
+
+
+
+```python
+plt.figure(figsize=(15,4))
+sns.countplot(data=df, x='신장(5Cm단위)',hue='성별코드')
+```
+
+
+
+
+    <AxesSubplot:xlabel='신장(5Cm단위)', ylabel='count'>
+
+
+
+
+    
+![png](output_42_1.png)
+    
+
+
+## 신장과 체중와 연령대 관계
+
+
+```python
+plt.figure(figsize=(15,4))
+sns.lineplot(data=df_sample, x='연령대코드(5세단위)', y='체중(5Kg단위)',hue='성별코드',ci='sd')
+```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='체중(5Kg단위)'>
+
+
+
+
+    
+![png](output_44_1.png)
+    
+
+
+
+```python
+plt.figure(figsize=(15,4))
+sns.lineplot(data=df_sample, x='연령대코드(5세단위)', y='신장(5Cm단위)',hue='성별코드',ci='sd')
+```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='신장(5Cm단위)'>
+
+
+
+
+    
+![png](output_45_1.png)
+    
+
+
 
 ```python
 
@@ -1686,63 +1898,83 @@ df.pivot_table(index=['성별코드','음주여부'],values='감마지티피',
 
 
 ```python
-
+plt.figure(figsize=(15,4))
+sns.lineplot(data=df_sample, x='연령대코드(5세단위)', y='신장(5Cm단위)',hue='음주여부',ci='sd')
 ```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='신장(5Cm단위)'>
+
+
+
+
+    
+![png](output_47_1.png)
+    
+
 
 
 ```python
-
+plt.figure(figsize=(15,4))
+# 겹쳐서 그릴 수 있다
+sns.barplot(data=df_sample, x='연령대코드(5세단위)', y='신장(5Cm단위)',hue='음주여부',ci='sd')
+sns.pointplot(data=df_sample, x='연령대코드(5세단위)', y='신장(5Cm단위)',hue='음주여부',ci='sd')
 ```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='신장(5Cm단위)'>
+
+
+
+
+    
+![png](output_48_1.png)
+    
+
 
 
 ```python
-
+plt.figure(figsize=(15,4)) 
+#막대로 표준편차 표시
+sns.pointplot(data=df_sample, x='연령대코드(5세단위)', y='신장(5Cm단위)',hue='성별코드',ci='sd')
 ```
+
+
+
+
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='신장(5Cm단위)'>
+
+
+
+
+    
+![png](output_49_1.png)
+    
+
 
 
 ```python
+plt.figure(figsize=(15,4)) 
 
+sns.lineplot(data=df, x='연령대코드(5세단위)', y= '혈색소',hue='음주여부',ci=None)
 ```
 
 
-```python
-
-```
 
 
-```python
-
-```
+    <AxesSubplot:xlabel='연령대코드(5세단위)', ylabel='혈색소'>
 
 
-```python
-
-```
 
 
-```python
+    
+![png](output_50_1.png)
+    
 
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
 
 
 ```python
