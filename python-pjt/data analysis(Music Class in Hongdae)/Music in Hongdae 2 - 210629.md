@@ -3,7 +3,7 @@
 - 실습일
 
   210628
-
+  210629
 
 ```python
 import pandas as pd
