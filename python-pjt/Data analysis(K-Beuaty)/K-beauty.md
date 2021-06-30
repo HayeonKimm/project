@@ -1981,6 +1981,132 @@ sns.relplot(data=df_sub, x='연도', y='백만원', hue='상품군별',kind='lin
     
 
 
+## 화장품의 온라인쇼핑 해외직접판매액
+
+
+```python
+df_cosmetic = df_total[df_total['상품군별']=='화장품'].copy()
+df_cosmetic['상품군별'].unique()
+```
+
+
+
+
+    array(['화장품'], dtype=object)
+
+
+
+
+```python
+plt.figure(figsize=(15,4))
+sns.lineplot(data=df_cosmetic, x='연도',y='백만원',hue='분기')
+```
+
+
+
+
+    <AxesSubplot:xlabel='연도', ylabel='백만원'>
+
+
+
+
+    
+![png](output_30_1.png)
+    
+
+
+##  1,2,3 분기에 비해 4분기 그래프가 위에있다 = 성장하고 있다.
+
+
+```python
+plt.figure(figsize=(15,4))
+plt.xticks(rotation=30)
+sns.lineplot(data=df_cosmetic, x='기간',y='백만원')
+```
+
+
+
+
+    <AxesSubplot:xlabel='기간', ylabel='백만원'>
+
+
+
+
+    
+![png](output_32_1.png)
+    
+
+
+## 화장품 판매액은 꾸준히 증가해왔다.
+
+
+```python
+#국가(대륙)별로 알아보자.
+
+plt.figure(figsize=(15,4))
+plt.xticks(rotation=30)
+sns.lineplot(data=df_cosmetic, x='기간',y='백만원',hue='국가(대륙)별')
+```
+
+
+
+
+    <AxesSubplot:xlabel='기간', ylabel='백만원'>
+
+
+
+
+    
+![png](output_34_1.png)
+    
+
+
+
+```python
+# 중국수치가 높아서 빼고 다시 그렸다.
+
+plt.figure(figsize=(15,4))
+plt.xticks(rotation=30)
+sns.lineplot(data=df_cosmetic[df_cosmetic['국가(대륙)별']!='중국'], x='기간',y='백만원',hue='국가(대륙)별')
+```
+
+
+
+
+    <AxesSubplot:xlabel='기간', ylabel='백만원'>
+
+
+
+
+    
+![png](output_35_1.png)
+    
+
+
+
+```python
+# 판매유형별로 알아보자
+plt.figure(figsize=(15,4))
+plt.xticks(rotation=30)
+df_sub=df[(df['판매유형별']!='계') & (df['판매유형별']!='면세점')].copy()
+sns.lineplot(data=df_sub,x='기간',y='백만원',hue='판매유형별', ci=None)
+```
+
+
+
+
+    <AxesSubplot:xlabel='기간', ylabel='백만원'>
+
+
+
+
+    
+![png](output_36_1.png)
+    
+
+
+- 전체적으로 지속적으로 성장하고 있고, 중국,미국,일본 세 국가가 온라인 및 오프라인에서 많이 구매하고 있다.
+
 
 ```python
 
