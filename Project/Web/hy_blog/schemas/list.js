@@ -1,43 +1,33 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const listsSchema = new mongoose.Schema({
-  
-  
-  
-  title: {
-    type: String,
-    required: true,
-    unique: false
-  },
-  name: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  data: {
-    type: String,
-    required: true,
-    unique: false
-  },
+    title: {
+        type: String,
+        required: true,
+        unique: false,
+    },
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    data: {
+        type: String,
+        required: true,
+        unique: false,
+    },
 
-  password: {
+    password: {
+        type: Number,
+        required: [true, 'Password is required!'],
+        unique: false,
+    },
 
-    type: Number,
-    required: [true,'Password is required!'],
-    unique: false
-
-  },
-
-  time: {
-
-    type: String,
-    required:false,
-    unique: false
-  
-
-
-  }
-
+    time: {
+        type: String,
+        required: false,
+        unique: false,
+    },
 });
 
-module.exports = mongoose.model("Lists", listsSchema);
+module.exports = mongoose.model('Lists', listsSchema);
