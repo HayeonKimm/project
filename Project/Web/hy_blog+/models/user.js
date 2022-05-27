@@ -1,10 +1,34 @@
 const mongoose = require('mongoose');
 
+
+
+
+// 유저 스키마 
+
+
+
 const UserSchema = new mongoose.Schema({
-    email: String,
-    nickname: String,
-    password: String,
+    nickname: {
+        type: String,
+        required: true,
+        unique: false,
+        minlength:3,
+    },
+    password: {
+        type: String,
+        required: true,
+        unique: false,
+        minlength:4,
+    },
+    confirmPassword: {
+        type: String,
+        required: true,
+        unique: false,
+    },
 });
+
+
+
 UserSchema.virtual('userId').get(function () {
     return this._id.toHexString();
 });
