@@ -1,11 +1,11 @@
 .bg-sparta {
-  background-color: #e8344e !important;
+  background-color: cornflowerblue; !important;
 }
 
 .btn-sparta {
   color: #ffffff !important;
-  background-color: #e8344e !important;
-  border-color: #e8344e !important;
+  background-color: cornflowerblue; !important;
+  border-color: cornflowerblue; !important;
 }
 
 .btn-outline-sparta {
