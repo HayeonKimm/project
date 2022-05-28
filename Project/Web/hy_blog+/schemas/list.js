@@ -6,20 +6,10 @@ const listsSchema = new mongoose.Schema({
         required: true,
         unique: false,
     },
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    data: {
-        type: String,
-        required: true,
-        unique: false,
-    },
 
-    password: {
-        type: Number,
-        required: [true, 'Password is required!'],
+    sentence: {
+        type: String,
+        required: true,
         unique: false,
     },
 

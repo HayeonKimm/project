@@ -30,6 +30,13 @@ router.get('/users/me', authMiddleware, async (req, res) => {
 });
 
 
+router.get('/', (req, res)=>{
+
+  res.send('김하연이므니다.');
+
+});
+
+
 app.use('/api', express.urlencoded({ extended: false }), [router, listsRouter ,authsRouter, usersRouter]);
 app.use(express.static('assets'));
 
@@ -41,11 +48,3 @@ app.listen(port, () => {
     console.log('서버가 켜졌어요!');
 });
 
-
-
-
-
-// 댓글 작성 API
-//     - 로그인 토큰을 전달했을 때에만 댓글 작성이 가능하도록 하기
-//     - 로그인 토큰을 전달하지 않은 채로 댓글 작성란을 누르면 "로그인이 필요한 기능입니다." 라는 에러 메세지를 response에 포함하기
-//     - 댓글 내용란을 비워둔 채 API를 호출하면 "댓글 내용을 입력해주세요" 라는 에러 메세지를 response에 포함하기

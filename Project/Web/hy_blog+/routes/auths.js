@@ -12,7 +12,7 @@ router.post('/auth', async (req, res) => {
 
     const user = await User.findOne({ email }, {nickname });
 
-    // NOTE: 인증 메세지는 자세히 설명하지 않는것을 원칙으로 한다: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#authentication-responses
+    // NOTE: 인증 메세지는 자세히 설명하지 않는것을 원칙으로 한다
 
     if (!user || password !== user.password) {
         res.status(400).send({
