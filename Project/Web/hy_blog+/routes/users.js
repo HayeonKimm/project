@@ -1,10 +1,8 @@
-
-
 const express = require('express');
 const router = express.Router();
-const Lists = require('../schemas/list');
+const Lists = require('../models/list');
 const dayjs = require('dayjs');
-
+const authMiddleware = require('../auth-middleware/auth-middleware');
 
 // 닉네임 유효성 검사 함수
 function CV_checkIdPattern(str) {
@@ -21,8 +19,6 @@ function CV_checkIdPattern(str) {
     }
 }
 
-
-
 // 회원가입 API
 
 //   1. 회원 가입 API
@@ -32,45 +28,40 @@ function CV_checkIdPattern(str) {
 //     - 비밀번호 확인은 비밀번호와 정확하게 일치하기
 //     - 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우 "중복된 닉네임입니다." 라는 에러메세지를 response에 포함하기
 
-
-
-
 router.post('/users', async (req, res) => {
     const { email, nickname, password, confirmPassword } = req.body;
 
     if (nickname.length < 3) {
-        res.status(400).send({ 
-          errorMessage: '닉네임은 3글자 이상입니다.',
+        res.status(400).send({
+            errorMessage: '닉네임은 3글자 이상입니다.',
         });
         return;
-    };
+    }
 
-
-    if (!CV_checkIdPattern(nickname)){
-      res.status(400).send({ 
-        errorMessage: '닉네임은 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성해주세요.',
-      });
-      return;
-    };
+    if (!CV_checkIdPattern(nickname)) {
+        res.status(400).send({
+            errorMessage:
+                '닉네임은 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성해주세요.',
+        });
+        return;
+    }
 
     // 비밀번호는 4자 이상이며
     if (password.length < 4) {
-      res.status(400).send({ 
-        errorMessage: '비밀번호는 3글자 이상입니다.',
-      });
-      return;
-    };
+        res.status(400).send({
+            errorMessage: '비밀번호는 3글자 이상입니다.',
+        });
+        return;
+    }
 
     // 닉네임과 같은 값이 포함된 경우 회원가입 실패로 만들기.
-    if (password.includes(nickname)){
-      
-      res.status(400).send({ 
-        errorMessage: '비밀번호는 닉네임 포함 금지입니다.',
-      });
-      return;
-    };
+    if (password.includes(nickname)) {
+        res.status(400).send({
+            errorMessage: '비밀번호는 닉네임 포함 금지입니다.',
+        });
+        return;
+    }
 
-    
     // 비밀번호 확인은 비밀번호와 정확하게 일치하기.
 
     if (password !== confirmPassword) {
@@ -78,7 +69,7 @@ router.post('/users', async (req, res) => {
             errorMessage: '패스워드가 패스워드 확인란과 다릅니다.',
         });
         return;
-    };
+    }
 
     // email or nickname이 동일한게 이미 있는지 확인하기 위해 가져온다.
     const existsUsers = await User.findOne({
@@ -97,11 +88,5 @@ router.post('/users', async (req, res) => {
 
     res.status(201).send({});
 });
-
-
-
-
-
-
 
 module.exports = router;
