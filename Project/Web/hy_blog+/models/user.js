@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Password is required!'],
         unique: false,
     },
-
 });
 
 module.exports = mongoose.model('User', UserSchema);

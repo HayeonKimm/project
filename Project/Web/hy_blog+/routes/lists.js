@@ -5,16 +5,17 @@ const dayjs = require('dayjs');
 const authMiddleware = require('../auth-middleware/auth-middleware');
 
 /// 게시물 작성 API
-/// 수정,삭제,작성은
-//authMiddleware 추가하기
 
 router.post('/lists', async (req, res) => {
-    
-    const { title, userId, sentence  } = req.body;
-
+    const { title, userId, sentence } = req.body;
 
     var now = dayjs();
     var time = now.format();
+
+    var Uni_num = Uni_num + 1;
+    if (Uni_num == 0) {
+        Uni_num = 1;
+    }
 
     time = time.slice(0, 16).split('T').join(' ');
 
@@ -23,12 +24,11 @@ router.post('/lists', async (req, res) => {
         userId,
         sentence,
         time,
+        Uni_num,
     });
 
     res.json({ Lists: createdLists });
 });
-
-
 
 // 전체 게시물 조회 API
 
@@ -40,12 +40,9 @@ router.get('/lists', async (req, res) => {
     });
 });
 
-
-
 // 게시글 수정 API
 
-
-router.put('/lists/:title',  authMiddleware, async (req, res) => {
+router.put('/lists/:title', authMiddleware, async (req, res) => {
     const { title } = req.params;
     const { sentence } = req.body;
 
@@ -69,18 +66,17 @@ router.put('/lists/:title',  authMiddleware, async (req, res) => {
 // 게시글 삭제 API
 // API를 호출할 때 입력된 비밀번호를 비교하여 동일할 때만 글이 삭제되게 하기
 
-router.delete('/lists/:title',authMiddleware, async (req, res) => {
+router.delete('/lists/:title', authMiddleware, async (req, res) => {
     const { title } = req.params;
     const { sentence } = req.body;
 
     const existsLists = await Lists.find({ title });
     if (existsLists.length) {
-        
         await Lists.deleteOne({ title });
-    }else {
-            return res
-                .status(400)
-                .json({ success: false, errorMessage: '권한이 없습니다.' });
+    } else {
+        return res
+            .status(400)
+            .json({ success: false, errorMessage: '권한이 없습니다.' });
     }
 
     res.json({ success: true });

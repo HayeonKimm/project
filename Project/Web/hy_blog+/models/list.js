@@ -15,5 +15,9 @@ var listSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    Uni_num: {
+        type: Number,
+        required: false,
+    },
 });
 module.exports = mongoose.model('Lists', listSchema);

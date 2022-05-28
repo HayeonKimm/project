@@ -10,10 +10,6 @@ const usersRouter = require('./routes/users');
 const authsRouter = require('./routes/auths');
 const authMiddleware = require('./auth-middleware/auth-middleware');
 
-
-
-
-
 mongoose.connect('mongodb://localhost/sparta', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
