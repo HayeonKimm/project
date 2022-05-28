@@ -4,15 +4,13 @@ const Lists = require('../models/list');
 const dayjs = require('dayjs');
 const authMiddleware = require('../auth-middleware/auth-middleware');
 
-/// 댓글작성 API
+/// 게시물 작성 API
 /// 수정,삭제,작성은
 //authMiddleware 추가하기
 
 router.post('/lists', async (req, res) => {
     
-    const { title  } = req.body;
-    const { userId } = req.body;
-    const {sentence} = req.body;
+    const { title, userId, sentence  } = req.body;
 
 
     var now = dayjs();
@@ -32,7 +30,7 @@ router.post('/lists', async (req, res) => {
 
 
 
-// 전체 게시물 조회
+// 전체 게시물 조회 API
 
 router.get('/lists', async (req, res) => {
     const lists = await Lists.find();

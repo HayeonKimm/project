@@ -3,17 +3,17 @@ const mongoose = require('mongoose');
 var listSchema = new mongoose.Schema({
     userId: {
         type: String,
-        required: 'Please enter your name',
-        trim: true,
+        required: true,
+        unique: true,
     },
     title: {
         type: String,
-        required: 'Please enter your title',
-        trim: true,
+        required: true,
+        unique: false,
     },
     sentence: {
         type: String,
-        required: 'Please enter your sentence',
+        required: true,
     },
 });
 module.exports = mongoose.model('Lists', listSchema);

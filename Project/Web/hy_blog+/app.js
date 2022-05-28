@@ -35,7 +35,8 @@ router.get('/', (req, res) => {
     res.send('김하연이므니다.');
 });
 
-app.use('api',express.json)
+app.use(express.json()); // 제이슨으로 요청을 받고, 요청을 보낼수 있는 함수.
+
 app.use('/api', express.urlencoded({ extended: false }), [
     router,
     listsRouter,
