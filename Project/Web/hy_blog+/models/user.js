@@ -1,38 +1,16 @@
-const mongoose = require('mongoose');
-
-
-
-
-// 유저 스키마 
-
-
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-    nickname: {
-        type: String,
-        required: true,
-        unique: false,
-        minlength:3,
-    },
-    password: {
-        type: String,
-        required: true,
-        unique: false,
-        minlength:4,
-    },
-    confirmPassword: {
-        type: String,
-        required: true,
-        unique: false,
-    },
+  email: String,
+  nickname: String,
+  password: String,
+});
+UserSchema.virtual("userId").get(function () {
+  return this._id.toHexString();
+});
+UserSchema.set("toJSON", {
+  virtuals: true,
 });
 
 
-
-UserSchema.virtual('userId').get(function () {
-    return this._id.toHexString();
-});
-UserSchema.set('toJSON', {
-    virtuals: true,
-});
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
