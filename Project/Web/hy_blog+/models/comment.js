@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 var commentSchema = new mongoose.Schema({
-    title_co: {
-        type: String,
-        required: true,
-        unique: false,
-    },
     sentence_co: {
         type: String,
         required: true,

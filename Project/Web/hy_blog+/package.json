@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test":"jest",
     "prettify": "prettier --write *.js **/*.js"
   },
   "dependencies": {
@@ -11,6 +12,7 @@
     "nodemon": "^2.0.16"
   },
   "devDependencies": {
+    "jest": "^28.1.0",
     "prettier": "^2.6.2"
   }
 }
