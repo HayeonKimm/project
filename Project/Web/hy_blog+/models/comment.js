@@ -6,10 +6,24 @@ var commentSchema = new mongoose.Schema({
         required: true,
     },
 
+
+    nickname:{
+
+
+        type: String,
+        required:true,
+    },
+
     Uni_num: {
         type: Number,
         required: false,
     },
+    
+    time:{
+
+        type: String,
+        required: false,
+    }
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

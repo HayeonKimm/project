@@ -2,20 +2,29 @@ const Comments = require('../models/comment');
 const authMiddleware = require('../auth-middleware/auth-middleware');
 const { route } = require('./lists');
 const router = require('./lists');
-const user = require('../models/user');
-const List = require('../models/list');
+const User = require('../models/user');
+const Lists = require('../models/list');
 const dayjs = require('dayjs');
 
 //댓글 작성 API
 
 router.post('/comments/:Uni_num', authMiddleware, async (req, res) => {
-    const { sentence_co, title_co } = req.body;
+    const { sentence_co } = req.body;
     const { Uni_num } = req.params;
+
     const { user } = res.locals;
-    const user_id = user.user_id;
+
+
+
+    console.log(user);
+    const nickname = user.nickname;
+
+
+
 
     const [existsPosts] = await Lists.find({ Uni_num });
 
+    console.log(existsPosts);
     // 배열 깨는거
 
     if (!existsPosts) {
@@ -31,16 +40,18 @@ router.post('/comments/:Uni_num', authMiddleware, async (req, res) => {
         });
     }
 
+    var now = dayjs();
+    var time = now.format();
     time = time.slice(0, 16).split('T').join(' ');
 
-    const createdLists = await Lists.create({
+    const createdComments = await Comments.create({
         sentence_co,
-        user_id,
+        nickname,
         Uni_num,
         time,
     });
 
-    res.json({ Lists: createdLists });
+    res.json({ Comments: createdComments });
 });
 
 // 댓글 목록 조회 API
@@ -48,7 +59,6 @@ router.post('/comments/:Uni_num', authMiddleware, async (req, res) => {
 router.get('/comments/:Uni_num', async (req, res) => {
     const [existsPosts] = await Todo.find().sort('-time').exec();
 
-    existsPosts.sort(-time);
 
     res.send({ existsPosts });
 });

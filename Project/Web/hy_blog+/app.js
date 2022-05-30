@@ -9,6 +9,7 @@ const listsRouter = require('./routes/lists');
 const usersRouter = require('./routes/users');
 const authsRouter = require('./routes/auths');
 const authMiddleware = require('./auth-middleware/auth-middleware');
+const commentsRouter = require('./routes/comments');
 
 mongoose.connect('mongodb://localhost/sparta', {
     useNewUrlParser: true,
@@ -18,10 +19,13 @@ mongoose.connect('mongodb://localhost/sparta', {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+
+app.use(express.json()); 
+
 // get
 
 router.get('/users/me', authMiddleware, async (req, res) => {
-    const { user } = res.locals;
+    const { user } = res.locals.user;
     res.send({
         user,
     });
@@ -31,7 +35,6 @@ router.get('/', (req, res) => {
     res.send('김하연이므니다.');
 });
 
-app.use(express.json()); // 제이슨으로 요청을 받고, 요청을 보낼수 있는 함수.
 
 app.use('/api', express.urlencoded({ extended: false }), [
     router,
@@ -39,7 +42,10 @@ app.use('/api', express.urlencoded({ extended: false }), [
     authsRouter,
     usersRouter,
 ]);
-app.use(express.static('assets'));
+
+
+
+// 제이슨으로 요청을 받고, 요청을 보낼수 있는 함수.
 
 app.get('/', (req, res) => {
     res.send('Hi!');

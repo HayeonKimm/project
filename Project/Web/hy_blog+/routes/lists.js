@@ -3,25 +3,24 @@ const router = express.Router();
 const Lists = require('../models/list');
 const dayjs = require('dayjs');
 const authMiddleware = require('../auth-middleware/auth-middleware');
+const { isWindows } = require('nodemon/lib/utils');
 
 /// 게시물 작성 API
 
+var Uni_num=0
+
 router.post('/lists', async (req, res) => {
-    const { title, userId, sentence } = req.body;
+    const { title,  sentence } = req.body;
 
     var now = dayjs();
     var time = now.format();
-
-    var Uni_num = Uni_num + 1;
-    if (Uni_num == 0) {
-        Uni_num = 1;
-    }
+    Uni_num++;
+    
 
     time = time.slice(0, 16).split('T').join(' ');
 
     const createdLists = await Lists.create({
         title,
-        userId,
         sentence,
         time,
         Uni_num,

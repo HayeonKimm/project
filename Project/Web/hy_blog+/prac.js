@@ -1,6 +1,10 @@
-const dayjs = require('dayjs');
+const name = '하연';
+var value = '하연123';
+if (value.split(name).length>1){
 
-var now = dayjs();
-var time = now.format();
 
-time = time.slice(0, 16).split('T').join(' ');
+    console.log(false);
+}else{
+
+    console.log(true)
+}

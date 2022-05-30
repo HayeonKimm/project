@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test":"jest",
+    "test": "jest",
     "prettify": "prettier --write *.js **/*.js"
   },
   "dependencies": {
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "jest": "^28.1.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "supertest": "^6.2.3"
   }
 }
