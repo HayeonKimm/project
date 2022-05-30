@@ -7,15 +7,14 @@ const { isWindows } = require('nodemon/lib/utils');
 
 /// 게시물 작성 API
 
-var Uni_num=0
+var Uni_num = 0;
 
 router.post('/lists', async (req, res) => {
-    const { title,  sentence } = req.body;
+    const { title, sentence } = req.body;
 
     var now = dayjs();
     var time = now.format();
     Uni_num++;
-    
 
     time = time.slice(0, 16).split('T').join(' ');
 

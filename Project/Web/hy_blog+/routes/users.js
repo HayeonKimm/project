@@ -57,11 +57,11 @@ router.post('/users', async (req, res) => {
     }
 
     // 닉네임과 같은 값이 포함된 경우 회원가입 실패로 만들기.
-    if (password.split(nickname).length>1){
+    if (password.split(nickname).length > 1) {
         res.status(400).send({
             errorMessage: '닉네임이 포함 됐습니다..',
         });
-    };
+    }
 
     // 비밀번호 확인은 비밀번호와 정확하게 일치하기.
 
@@ -69,7 +69,7 @@ router.post('/users', async (req, res) => {
         res.status(400).send({
             errorMessage: '패스워드가 패스워드 확인란과 다릅니다.',
         });
-    };
+    }
 
     // email or nickname이 동일한게 이미 있는지 확인하기 위해 가져온다.
     const existsUsers = await User.findOne({

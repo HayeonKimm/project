@@ -1,20 +1,11 @@
 module.exports = {
+    password_test2: (value) => {
+        var nickname = '하연';
 
-
-    
-
-
-    password_test2 : (value) => {
-
-        var nickname = "하연";
-
-        if (value.split(nickname).length>1){
-                
+        if (value.split(nickname).length > 1) {
             return false;
-        }else{
-
+        } else {
             return true;
         }
-    }
-
+    },
 };

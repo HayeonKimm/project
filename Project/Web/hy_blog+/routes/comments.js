@@ -14,13 +14,8 @@ router.post('/comments/:Uni_num', authMiddleware, async (req, res) => {
 
     const { user } = res.locals;
 
-
-
     console.log(user);
     const nickname = user.nickname;
-
-
-
 
     const [existsPosts] = await Lists.find({ Uni_num });
 
@@ -57,8 +52,7 @@ router.post('/comments/:Uni_num', authMiddleware, async (req, res) => {
 // 댓글 목록 조회 API
 
 router.get('/comments/:Uni_num', async (req, res) => {
-    const [existsPosts] = await Todo.find().sort('-time').exec();
-
+    const [existsPosts] = await Comments.find().sort('-time').exec();
 
     res.send({ existsPosts });
 });
@@ -67,6 +61,9 @@ router.get('/comments/:Uni_num', async (req, res) => {
 
 router.put('/comments/:Uni_num', authMiddleware, async (req, res) => {
     // 없을 때
+
+    const { Uni_num } = req.params;
+    const { sentence_co } = req.body;
 
     const [existsLists] = await Lists.find({ Uni_num });
 
@@ -78,7 +75,7 @@ router.put('/comments/:Uni_num', authMiddleware, async (req, res) => {
             .json({ success: false, errorMessage: '해당 게시물이 없습니다.' });
     }
 
-    await Lists.updateOne({ Uni_num }, { $set: { sentence_co } });
+    await Comments.updateOne({ Uni_num }, { $set: { sentence_co } });
 
     res.json({ success: true });
 });
@@ -86,9 +83,13 @@ router.put('/comments/:Uni_num', authMiddleware, async (req, res) => {
 // 댓글 삭제 API
 
 router.delete('/comments/:Uni_num', authMiddleware, async (req, res) => {
+
+    const { Uni_num } = req.params;
     const existsLists = await Lists.find({ Uni_num });
+
+
     if (existsLists.length) {
-        await Lists.deleteOne({ Uni_num });
+        await Comments.deleteOne({ Uni_num });
     } else {
         return res
             .status(400)

@@ -1,22 +1,9 @@
 module.exports = {
-
-
-
-
-    password_test : (value) => {
-
-        if (value.length<4){
-                
+    password_test: (value) => {
+        if (value.length < 4) {
             return false;
-        }else{
-
+        } else {
             return true;
         }
-    }
-
-
-
-
-
-
+    },
 };

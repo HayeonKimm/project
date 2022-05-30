@@ -19,8 +19,7 @@ mongoose.connect('mongodb://localhost/sparta', {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-
-app.use(express.json()); 
+app.use(express.json());
 
 // get
 
@@ -35,15 +34,12 @@ router.get('/', (req, res) => {
     res.send('김하연이므니다.');
 });
 
-
 app.use('/api', express.urlencoded({ extended: false }), [
     router,
     listsRouter,
     authsRouter,
     usersRouter,
 ]);
-
-
 
 // 제이슨으로 요청을 받고, 요청을 보낼수 있는 함수.
 

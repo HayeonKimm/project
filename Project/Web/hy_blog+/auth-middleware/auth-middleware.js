@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
         const { nickname } = jwt.verify(authToken, 'customized-secret-key');
 
         // console.log(nickname);
-        const user = User.findOne({nickname}).then((user) => {
+        const user = User.findOne({ nickname }).then((user) => {
             res.locals.user = user;
             next();
         });
